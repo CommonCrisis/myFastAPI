@@ -56,4 +56,4 @@ build-backend = "poetry.masonry.api"
 [tool.taskipy.tasks]
 hook-commit = "pre-commit install"
 hook-push = "pre-commit install -t pre-push"
-test = "python -m pytest app/test/test_*.py"
+test = "python -m pytest app/tests/test_*.py"
