@@ -1,0 +1,11 @@
+#!/bin/bash
+
+FILE=pyproject.toml
+if test -f "$FILE"; then
+    echo "$FILE exists"
+    poetry config virtualenvs.in-project true
+    poetry install
+    git config --global init.templateDir ~/.git-template
+    poetry run pre-commit init-templatedir -t pre-commit --hook-type pre-commit ~/.git-template
+    poetry run pre-commit init-templatedir -t pre-push --hook-type pre-push ~/.git-template
+fi
