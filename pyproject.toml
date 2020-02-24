@@ -1,0 +1,59 @@
+[tool.poetry]
+name = "FastAPI template"
+version = "0.1"
+description = "FastAPI template"
+
+authors = [
+    "Samuel Stegmeyer <samuel.stegmeyer@***.com"
+]
+
+readme = 'README.md'
+
+repository = "https://github.com/CommonCrisis/myFastAPI"
+
+[tool.poetry.dependencies]
+python = "~3.7"
+APScheduler = "3.6.3"
+email-validator = "1.0"
+fastapi = "0.46.0"
+pymysql = "0.9.3"
+python-dotenv = "0.10.3"
+sqlalchemy = "1.3.8"
+uvicorn = "0.11.1"
+
+[tool.poetry.dev-dependencies]
+black = {version = "19.10b0", allow-prereleases = true}
+flake8 = "3.7.9"
+pre-commit = "2.1.0"
+pylint = "2.4.1"
+pytest = "5.2.1"
+pytest-custom_exit_code = "0.3.0"
+tavern = ">=1.0.0a3"
+autoflake = "1.3.1"
+taskipy = "1.1.3"
+
+[tool.black]
+line-length = 140
+skip-string-normalization = true
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+[build-system]
+requires = ["poetry==1.0.3"]
+build-backend = "poetry.masonry.api"
+
+[tool.taskipy.tasks]
+hook-commit = "pre-commit install"
+hook-push = "pre-commit install -t pre-push"
+test = "python -m pytest app/test/test_*.py"
