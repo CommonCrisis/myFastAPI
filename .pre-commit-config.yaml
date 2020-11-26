@@ -1,33 +1,36 @@
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.5.0
+    rev: v3.2.0
     hooks:
     -   id: check-added-large-files
-    -   id: flake8
-        language_version: python3.7
-    -   id: detect-private-key
     -   id: check-merge-conflict
-    -   id: name-tests-test
+    -   id: trailing-whitespace
+    -   id: detect-private-key
     -   id: name-tests-test
         args: ['--django']
     -   id: mixed-line-ending
         args: ['--fix=lf']
     -   id: double-quote-string-fixer
--   repo: https://github.com/ambv/black
-    rev: 19.10b0
-    hooks:
-    -   id: black
-        language_version: python3.7
--   repo: https://github.com/asottile/reorder_python_imports
-    rev: v1.9.0
-    hooks:
-    -   id: reorder-python-imports
-        language_version: python3.7
 -   repo: https://github.com/humitos/mirrors-autoflake
     rev: v1.3
     hooks:
     -   id: autoflake
-        args: ['--in-place', '--remove-all-unused-imports', '--remove-unused-variable']
+        args: ['--in-place', '--remove-all-unused-imports', '--remove-unused-variable', '--ignore-init-module-imports']
+-   repo: https://github.com/ambv/black
+    rev: 20.8b1
+    hooks:
+    -   id: black
+        language_version: python3.7
+-   repo: https://github.com/asottile/reorder_python_imports
+    rev: v2.3.5
+    hooks:
+    -   id: reorder-python-imports
+        language_version: python3.7
+- repo: https://gitlab.com/pycqa/flake8
+  rev: 3.8.3
+  hooks:
+  - id: flake8
+    language_version: python3
 -  repo: local
    hooks:
    -   id: pytest
@@ -38,3 +41,19 @@ repos:
        always_run: true
        language: system
        types: [python]
+-   repo: local
+    hooks:
+    -   id: post-commit-local-reminder
+        name: Reminder for versioning
+        stages: [post-commit]
+        entry: poetry run task reminder
+        language: system
+        always_run: true
+-   repo: local
+    hooks:
+    -   id: run-bandit
+        name: Run bandit on code
+        stages: [push]
+        entry: poetry run task bandit
+        language: system
+        always_run: true
