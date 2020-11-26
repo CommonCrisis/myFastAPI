@@ -1,0 +1,4 @@
+[bandit]
+targets = app
+skips = B105,B403,B301
+exclude = __init__.py,test/
